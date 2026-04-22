@@ -13,6 +13,17 @@
     <link href="/img/fav.png" rel="shortcut icon" />
     <style type="text/css">
       html, body { margin: 0; padding: 0; background-color: #474747; }
+      .flapper .digit,
+      .flapper .digit .front.top,
+      .flapper .digit .front.bottom,
+      .flapper .digit .back.top,
+      .flapper .digit .back.bottom {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        will-change: transform;
+      }
     </style>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
