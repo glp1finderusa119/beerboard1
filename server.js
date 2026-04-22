@@ -15,7 +15,14 @@ app.get("/api/Companies/:storeId/BeerMenus", (req, res) => {
       hostname: UPSTREAM_HOST,
       path: `/api/Companies/${storeId}/BeerMenus`,
       method: "GET",
-      headers: { APIKey: apiKey, Accept: "application/json" },
+      headers: {
+        APIKey: apiKey,
+        Accept: "application/json",
+        Origin: "https://beerboard.localpubliceatery.com",
+        Referer: "https://beerboard.localpubliceatery.com/",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+      },
     },
     (r) => {
       res.status(r.statusCode || 502);
