@@ -712,7 +712,7 @@ $(document).ready(function () {
   function LoadData() {
     var storeId = storeData.storeId
     console.log(storeId);
-    var apiUrl = "/api/Companies/" + storeId + "/BeerMenus";
+    var apiUrl = "https://skilletmenuswebapi.joeyrestaurants.com/api/Companies/" + storeId + "/BeerMenus";
     console.log("loading...");
     loading = true;
 
