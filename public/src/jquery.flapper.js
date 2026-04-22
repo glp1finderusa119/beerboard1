@@ -198,12 +198,37 @@
 
         animateSlow: function(speed1, speed2) {
             var _this = this;
+            var topEl = this.$front_top[0];
+            var bottomEl = this.$front_bottom[0];
+
+            this.$front_top.off('transitionend.flapper');
+            this.$front_bottom.off('transitionend.flapper');
 
             this.$back_top.show();
-            this.$front_bottom.transform({ scaleY: 0.0 });
-            this.$front_top.transform({ scaleY: 1.0 }).stop().show().animate({ scaleY: 0.0 }, speed1, 'swing', function(){
-                _this.$front_bottom.stop().show().animate({ scaleY: 1.0 }, speed2, 'linear');
-                _this.$front_top.hide().transform({ scaleY: 1.0 });
+
+            topEl.style.transition = 'none';
+            topEl.style.transform = 'scaleY(1)';
+            this.$front_top.show();
+
+            bottomEl.style.transition = 'none';
+            bottomEl.style.transform = 'scaleY(0)';
+
+            void topEl.offsetHeight;
+
+            topEl.style.transition = 'transform ' + speed1 + 'ms cubic-bezier(.42,0,.58,1)';
+            topEl.style.transform = 'scaleY(0)';
+
+            this.$front_top.one('transitionend.flapper', function(e) {
+                if (e.originalEvent && e.originalEvent.propertyName && e.originalEvent.propertyName !== 'transform') return;
+
+                _this.$front_bottom.show();
+                void bottomEl.offsetHeight;
+                bottomEl.style.transition = 'transform ' + speed2 + 'ms linear';
+                bottomEl.style.transform = 'scaleY(1)';
+
+                _this.$front_top.hide();
+                topEl.style.transition = 'none';
+                topEl.style.transform = 'scaleY(1)';
             });
         },
 
