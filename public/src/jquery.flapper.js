@@ -227,26 +227,6 @@
         goToPosition: function(pos) {
             var _this = this;
 
-            if (_this.options.instant) {
-                if (_this.timing_timer) {
-                    clearInterval(_this.timing_timer);
-                    _this.timing_timer = null;
-                }
-                if (_this.timeout) {
-                    clearTimeout(_this.timeout);
-                    _this.timeout = null;
-                }
-                _this.pos = pos;
-                var ch = _this.options.chars[pos];
-                _this.$prev.html(ch).show();
-                _this.$next.html(ch);
-                _this.$front_top.show();
-                _this.$front_bottom.hide();
-                _this.$back_top.show();
-                _this.$ele.trigger("digitAnimEnd");
-                return;
-            }
-
             var frameFunc = function() {
                 if (_this.timing_timer) {
                     clearInterval(_this.timing_timer);
