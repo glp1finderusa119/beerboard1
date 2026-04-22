@@ -132,7 +132,7 @@ $(document).ready(function () {
       timing: $timing,
       min_timing: $minTiming,
       threshhold: $threshold,
-      transform: false,
+      transform: true,
       on_anim_end: onAnimEnd,
     };
 
@@ -258,7 +258,7 @@ $(document).ready(function () {
     timing: 600, // be careful with these timing setting ... this is for the count down timer .
     min_timing: 1500,
     threshold: 100,
-    transform: false,
+    transform: true,
   });
 
   var $header_display_m = $("#header_display_m");
@@ -268,7 +268,7 @@ $(document).ready(function () {
     timing: $timing,
     min_timing: $minTiming,
     threshold: $threshold,
-    transform: false,
+    transform: true,
   });
 
   // This is the timer to count down to Happy hour
