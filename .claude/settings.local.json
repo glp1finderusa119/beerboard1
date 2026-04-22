@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:beerboard.localpubliceatery.com)",
+      "Bash(curl -s \"https://beerboard.localpubliceatery.com/?store=LWOO\" -o /tmp/beerboard.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://beerboard.localpubliceatery.com/src/beer-board.js\" -o /tmp/bb.js)",
+      "Bash(curl -s \"https://beerboard.localpubliceatery.com/src/data.js\" -o /tmp/data.js)",
+      "Bash(grep -n \"LWOO\\\\|fetch\\\\|ajax\\\\|\\\\\\\\.get\\\\\\\\|url:\\\\|api\\\\\\\\|digitalpour\\\\\\\\|untappd\\\\\\\\|http\" /tmp/bb.js)",
+      "Bash(curl -s \"https://skilletmenuswebapi.joeyrestaurants.com/api/Companies/LWOO/BeerMenus\" -o /tmp/lwoo.json -w \"HTTP %{http_code}\\\\nSize: %{size_download}\\\\n\")",
+      "Bash(curl -sv \"https://skilletmenuswebapi.joeyrestaurants.com/api/Companies/LWOO/BeerMenus\")"
+    ]
+  }
+}
