@@ -46,6 +46,7 @@ $(document).ready(function () {
   var $timing = storeData.timing;
   var $minTiming = storeData.minTiming;
   var $threshold = storeData.threshold;
+  var $fastMode = new URLSearchParams(window.location.search).get("fast") === "1";
   var $lineDelay = storeData.lineDelay;
   var $pageInterval = storeData.pageInterval;
 
@@ -134,6 +135,7 @@ $(document).ready(function () {
       threshhold: $threshold,
       transform: true,
       on_anim_end: onAnimEnd,
+      instant: $fastMode,
     };
 
     this.timers = [];
@@ -259,6 +261,7 @@ $(document).ready(function () {
     min_timing: 1500,
     threshold: 100,
     transform: true,
+    instant: $fastMode,
   });
 
   var $header_display_m = $("#header_display_m");
@@ -269,6 +272,7 @@ $(document).ready(function () {
     min_timing: $minTiming,
     threshold: $threshold,
     transform: true,
+    instant: $fastMode,
   });
 
   // This is the timer to count down to Happy hour
