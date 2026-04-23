@@ -198,37 +198,12 @@
 
         animateSlow: function(speed1, speed2) {
             var _this = this;
-            var topEl = this.$front_top[0];
-            var bottomEl = this.$front_bottom[0];
-
-            this.$front_top.off('transitionend.flapper');
-            this.$front_bottom.off('transitionend.flapper');
 
             this.$back_top.show();
-
-            topEl.style.transition = 'none';
-            topEl.style.transform = 'scaleY(1)';
-            this.$front_top.show();
-
-            bottomEl.style.transition = 'none';
-            bottomEl.style.transform = 'scaleY(0)';
-
-            void topEl.offsetHeight;
-
-            topEl.style.transition = 'transform ' + speed1 + 'ms cubic-bezier(.42,0,.58,1)';
-            topEl.style.transform = 'scaleY(0)';
-
-            this.$front_top.one('transitionend.flapper', function(e) {
-                if (e.originalEvent && e.originalEvent.propertyName && e.originalEvent.propertyName !== 'transform') return;
-
-                _this.$front_bottom.show();
-                void bottomEl.offsetHeight;
-                bottomEl.style.transition = 'transform ' + speed2 + 'ms linear';
-                bottomEl.style.transform = 'scaleY(1)';
-
-                _this.$front_top.hide();
-                topEl.style.transition = 'none';
-                topEl.style.transform = 'scaleY(1)';
+            this.$front_bottom.transform({ scaleY: 0.0 });
+            this.$front_top.transform({ scaleY: 1.0 }).stop().show().animate({ scaleY: 0.0 }, speed1, 'swing', function(){
+                _this.$front_bottom.stop().show().animate({ scaleY: 1.0 }, speed2, 'linear');
+                _this.$front_top.hide().transform({ scaleY: 1.0 });
             });
         },
 
@@ -252,81 +227,33 @@
         goToPosition: function(pos) {
             var _this = this;
 
-            if (_this.timing_timer) {
-                clearInterval(_this.timing_timer);
-                _this.timing_timer = null;
-            }
-            if (_this.timeout) {
-                clearTimeout(_this.timeout);
-                _this.timeout = null;
-            }
-
-            if (_this.pos === pos) {
-                _this.$ele.trigger("digitAnimEnd");
-                return;
-            }
-
-            _this.$prev.html(_this.options.chars[_this.pos]).show();
-            _this.$front_bottom.hide();
-            _this.$next.html(_this.options.chars[pos]);
-
-            var speed = _this.options.timing;
-            var speed1 = Math.max(40, Math.floor(speed * 0.6));
-            var speed2 = Math.max(25, Math.floor(speed * 0.3));
-
-            _this.pos = pos;
-
-            if (speed >= _this.options.threshhold) {
-                if (_this.options.transform) {
-                    _this.animateSlowThenDone(speed1, speed2);
-                } else {
-                    _this.animateFast(speed1, speed2);
-                    setTimeout(function() { _this.$ele.trigger("digitAnimEnd"); }, speed1 + speed2 + 5);
+            var frameFunc = function() {
+                if (_this.timing_timer) {
+                    clearInterval(_this.timing_timer);
+                    _this.timing_timer = null;
                 }
-            } else {
-                _this.$ele.trigger("digitAnimEnd");
-            }
-        },
 
-        animateSlowThenDone: function(speed1, speed2) {
-            var _this = this;
-            var topEl = this.$front_top[0];
-            var bottomEl = this.$front_bottom[0];
+                var distance = pos - _this.pos;
+                if (distance <0) {
+                    distance += _this.options.chars.length;
+                }
 
-            this.$front_top.off('transitionend.flapper');
-            this.$front_bottom.off('transitionend.flapper');
-
-            this.$back_top.show();
-
-            topEl.style.transition = 'none';
-            topEl.style.transform = 'scaleY(1)';
-            this.$front_top.show();
-
-            bottomEl.style.transition = 'none';
-            bottomEl.style.transform = 'scaleY(0)';
-
-            void topEl.offsetHeight;
-
-            topEl.style.transition = 'transform ' + speed1 + 'ms cubic-bezier(.42,0,.58,1)';
-            topEl.style.transform = 'scaleY(0)';
-
-            this.$front_top.one('transitionend.flapper', function(e) {
-                if (e.originalEvent && e.originalEvent.propertyName && e.originalEvent.propertyName !== 'transform') return;
-
-                _this.$front_bottom.show();
-                void bottomEl.offsetHeight;
-                bottomEl.style.transition = 'transform ' + speed2 + 'ms linear';
-                bottomEl.style.transform = 'scaleY(1)';
-
-                _this.$front_bottom.one('transitionend.flapper', function(e2) {
-                    if (e2.originalEvent && e2.originalEvent.propertyName && e2.originalEvent.propertyName !== 'transform') return;
-
-                    _this.$front_top.hide();
-                    topEl.style.transition = 'none';
-                    topEl.style.transform = 'scaleY(1)';
+                if (_this.pos == pos) {
+                    clearInterval(_this.timing_timer);
+                    _this.timing_timer = null;
                     _this.$ele.trigger("digitAnimEnd");
-                });
-            });
+                } else {
+                    var duration = Math.floor(
+                            (_this.options.timing - _this.options.min_timing)
+                            / distance + _this.options.min_timing
+                    );
+                    _this.increment(duration);
+                    _this.timing_timer = setTimeout(frameFunc, duration);
+                }
+
+            }
+
+            frameFunc();
         },
 
         goToNextPosition: function() {

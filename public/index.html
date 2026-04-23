@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=1920, initial-scale=1, user-scalable=no" />
     <title>Local Public Eatery - Beerboard</title>
     <link href="css/flapper.css" type="text/css" rel="stylesheet" />
@@ -11,20 +9,7 @@
     <script src="src/jquery.flapper.js"></script>
     <script type="module" src="src/beer-board.js"></script>
     <link href="/img/fav.png" rel="shortcut icon" />
-    <style type="text/css">
-      html, body { margin: 0; padding: 0; background-color: #474747; }
-      .flapper .digit,
-      .flapper .digit .front.top,
-      .flapper .digit .front.bottom,
-      .flapper .digit .back.top,
-      .flapper .digit .back.bottom {
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        will-change: transform;
-      }
-    </style>
+    <style type="text/css"></style>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -63,6 +48,22 @@
         <input class="display CU" />
         <input class="display CU" />
       </div>
+        <div id="flapControl" class="flapControl" style="display: none">
+          <center>
+              <label class="modifiers">Timing:</label>
+              <input id="timing" type="number" value="100" class="modifiers">
+              <label class="modifiers">Min-Timing:</label>
+              <input id="minTiming" type="number" value="200" class="modifiers">
+              <label class="modifiers">Threshold:</label>
+              <input id="threshold" type="number" value="100" class="modifiers">
+              <label class="modifiers">Line Delay:</label>
+              <input id="lineDelay" type="number" value="2000" class="modifiers">
+              <br><br>
+              <button id="change" class="modbutton">Change</button>
+              <button id="reloadButton" class="modbutton">Reload</button>
+          </center>
+      </div>
     </div>
+    <script></script>
   </body>
 </html>
